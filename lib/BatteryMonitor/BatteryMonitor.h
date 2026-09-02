@@ -31,6 +31,11 @@ public:
     Reading read() const;
 
 private:
+    // Upper bound on `samples`, so readAveragedAdcVoltage() can use a fixed-
+    // size stack buffer (no heap allocation) that the ESP32 asm sum loop
+    // reads directly.
+    static constexpr uint8_t kMaxSamples = 64;
+
     uint8_t _pin;
     float _dividerRatio;
     float _adcRefVoltage;
